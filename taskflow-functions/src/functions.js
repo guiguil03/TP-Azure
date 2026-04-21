@@ -19,9 +19,10 @@ app.http('notify-assigned', {
 
       await supabase.from('notifications').insert({
         user_id: record.assigned_to,
-        task_id: record.id,
         type: 'task_assigned',
-        message: `Vous avez été assigné à la tâche : ${record.title}`
+        title: `Nouvelle tâche : ${record.title}`,
+        body: `Priorité ${record.priority ?? 'normale'}`,
+        metadata: { task_id: record.id, project_id: record.project_id }
       })
 
       if (email) {

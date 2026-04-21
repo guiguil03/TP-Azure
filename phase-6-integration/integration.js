@@ -60,6 +60,12 @@ async function run() {
   }
   console.log(`${createdTasks.length} taches creees via Azure Function`)
 
+  // 3b. Assigner les tâches à Bob AVANT le Realtime (déclenche le webhook, pas compté dans RT)
+  for (const task of createdTasks) {
+    await adminClient.from('tasks').update({ assigned_to: bobUser.id }).eq('id', task.id)
+    await new Promise(r => setTimeout(r, 300))
+  }
+
   // 4. Alice écoute en Realtime (aliceClient a une session JWT valide pour le WebSocket)
   let rtCount = 0
   const channel = aliceClient.channel(`project:${project.id}`)
@@ -71,7 +77,7 @@ async function run() {
 
   await new Promise(r => setTimeout(r, 3000))
 
-  // 5. Bob fait progresser les tâches (utilise adminClient car RLS user en Node.js non supporté)
+  // Bob fait progresser les tâches
   for (const task of createdTasks) {
     const { error: e1 } = await adminClient.from('tasks').update({ status: 'in_progress' }).eq('id', task.id)
     if (e1) console.log('Erreur update in_progress:', e1.message)
@@ -93,7 +99,7 @@ async function run() {
   console.log(`  Par statut :`, stats.by_status)
 
   // 7. Notifications
-  const { data: notifs } = await bob.from('notifications').select('*')
+  const { data: notifs } = await adminClient.from('notifications').select('*').eq('user_id', bobUser.id)
   console.log(`\nNotifications Bob: ${notifs?.length}`)
 
   alice.removeChannel(channel)
