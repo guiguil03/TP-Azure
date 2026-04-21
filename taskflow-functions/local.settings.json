@@ -1,0 +1,11 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "",
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "SUPABASE_URL": "https://VOTRE-PROJECT-ID.supabase.co",
+    "SUPABASE_ANON_KEY": "VOTRE-ANON-KEY",
+    "SUPABASE_SERVICE_KEY": "VOTRE-SERVICE-KEY",
+    "RESEND_API_KEY": "re_VOTRE-CLE-RESEND"
+  }
+}

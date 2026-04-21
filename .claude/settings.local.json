@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir /b \"C:\\\\Users\\\\guill\\\\Documents\\\\MyDigitalSchool\\\\taskflow-client\\\\*.js\")",
+      "Bash(cmd.exe /c \"where az\")",
+      "Bash(az group *)",
+      "Bash(node *)",
+      "Bash(curl *)",
+      "Bash(az functionapp config appsettings *)",
+      "Bash(/c/Program Files \\(x86\\)/Microsoft SDKs/Azure/CLI2/wbin/az.cmd functionapp *)"
+    ]
+  }
+}
